@@ -1,0 +1,19 @@
+{
+    "operaciones": [
+        {
+            "operacion": "suma",
+            "valor1": 4.5,
+            "valor2": 5.32
+        }
+        ],
+        "configuraciones": [
+            {
+                "texto": "Operaciones",
+                "fondo": "azul"
+            }
+    ]
+}
+
+
+
+
