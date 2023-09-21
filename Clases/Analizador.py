@@ -1,6 +1,10 @@
+import json
+
+tabla_errores = []
+
 def Autómata (archivo):
+    global tabla_errores
     tabla_tokens = [] #Lista para guardar los tokens.
-    tabla_errores = [] #Lista para guardar los errores.
     fila = 1 #Fila del lexema        
     columna = 0 #Columna del lexema
     i = 0 #Contador para el recorrido de la cadena (archivo)
@@ -88,13 +92,9 @@ def Autómata (archivo):
                 estadoActual = 0
 
         elif estadoActual == 2:
-            if archivo[i] == '/':
-                print("Entró alguna vez")
-                columna += 1
                 
-            elif archivo[i] == '"':
+            if archivo[i] == '"':
                 if varTemp in palabrasReservadas:
-                    print("Entró")
                     tabla_tokens.append([varTemp, "Reservada", fila, columna])
                 elif varTemp in operadores:
                     tabla_tokens.append([varTemp, "Operador", fila, columna])
@@ -144,3 +144,48 @@ def Autómata (archivo):
     res = [tabla_tokens, tabla_errores] #Retornamos las 2 listas.
     return res
 
+'''def errores():
+    global tabla_errores 
+    
+    errores_json = {"errores": []}
+
+    for i, error in enumerate(tabla_errores):
+        error_dict = {
+            "No": i + 1,
+            "descripcion": {
+                "lexema": error[0],
+                "tipo": "error lexico",
+                "columna": error[2],
+                "fila": error[1]
+            }
+        }
+        errores_json["errores"].append(error_dict)
+
+    with open("errores.json", "w", encoding="utf-8") as json_file:
+        json.dump(errores_json, json_file, indent=4)'''
+
+def main():
+    entrada ='''
+                {
+                    "operaciones": [+
+                                        {
+                                            "operacion":"suma",
+                                            "valor1": 4.5,
+                                            "valor2": '
+                                        }
+                                    ], 
+                    "configuraciones": [-
+                                            {
+                                                "texto": "Operaciones",
+                                                "fondo": "azul"
+                                            }
+                                        ]
+                }'''
+    salida = Autómata(entrada)
+    print("TOKENS")
+    for token in salida[0]:
+        print(token)
+    #errores()
+
+if __name__ == "__main__":
+    main()
