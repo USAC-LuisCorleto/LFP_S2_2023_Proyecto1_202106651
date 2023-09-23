@@ -1,0 +1,175 @@
+{
+    "operaciones": [
+        {
+        "operacion": "multiplicacion",
+        "valor1": [{
+                "operacion": "inverso",
+                "valor1": [
+                    {
+                        "operacion": "suma",
+                        "valor1": -10,
+                        "valor2": 5
+                    }
+                ]
+        }],
+        "valor2": 2
+        },
+        {
+            "operacion": "suma",
+            "valor1": [
+                {
+                    "operacion": "division",
+                    "valor1": [
+                        {
+                            "operacion": "resta",
+                            "valor1": 10,
+                            "valor2": [
+                                {
+                                    "operacion": "potencia",
+                                    "valor1": 8,
+                                    "valor2": 4
+                                }
+                            ]
+                        }
+                    ],
+                    "valor2": [{
+                        "operacion": "multiplicacion",
+                        "valor1": [{
+                            "operacion": "division",
+                            "valor1": 15,
+                            "valor2": 3
+                        }],
+                        "valor2": [{
+                            "operacion": "coseno",
+                            "valor1": [{
+                                "operacion": "potencia",
+                                "valor1": 2,
+                                "valor2": 2
+                            }]
+                        }]
+                    }]
+                }
+            ],
+            "valor2": 5.32
+        },
+        {
+            "operacion": "resta",
+            "valor1": 4.5,
+            "valor2": [
+                {
+                    "operacion": "potencia",
+                    "valor1": 10,
+                    "valor2": 3
+                }
+            ]
+        },
+        {
+            "operacion": "suma",
+            "valor1": [
+                {
+                    "operacion": "potencia",
+                    "valor1": 4,
+                    "valor2": 3
+                }
+            ],
+            "valor2": [
+                {
+                    "operacion": "potencia",
+                    "valor1": 5,
+                    "valor2": 2
+                }
+            ]
+        },
+        {
+            "operacion": "raiz",
+            "valor1": 4,
+            "valor2": 2
+        },
+        {
+            "operacion": "suma",
+            "valor1": [
+                {
+                    "operacion": "raiz",
+                    "valor1": 125,
+                    "valor2": 3
+                }
+            ],
+            "valor2": 2
+        },
+        {
+            "operacion": "suma",
+            "valor1": [
+                {
+                    "operacion": "seno",
+                    "valor1": 90
+                }
+            ],
+            "valor2": 5.32
+        },
+        {
+            "operacion": "multiplicacion",
+            "valor1": 7,
+            "valor2": 3
+        },
+        {
+            "operacion": "division",
+            "valor1": 15,
+            "valor2": 3
+        },
+        {
+            "operacion": "coseno",
+            "valor1": [
+                {
+                    "operacion": "coseno",
+                    "valor1": 45
+                }
+            ]
+        },
+        {
+            "operacion": "resta",
+            "valor1": 15,
+            "valor2": 3
+        },
+        {
+            "operacion": "mod",
+            "valor1": 16,
+            "valor2": 3
+        },
+        {
+            "operacion": "tangente",
+            "valor1": 16
+        },
+        {
+            "operacion": "inverso",
+            "valor1": [
+                {
+                    "operacion": "suma",
+                    "valor1": [
+                        {
+                            "operacion": "coseno",
+                            "valor1": 45
+                        }
+                    ],
+                    "valor2": [
+                        {
+                            "operacion": "seno",
+                            "valor1": 90
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "configuraciones": [
+        {
+            "texto": "archivo operaciones",
+            "fondo": "blue",
+            "fuente": "Comic Sans MS",
+            "forma": "hexagon"
+        }
+    ]
+}
+
+
+
+

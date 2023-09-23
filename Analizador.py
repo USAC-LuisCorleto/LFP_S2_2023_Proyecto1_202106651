@@ -1,5 +1,3 @@
-import json
-
 tabla_errores = []
 
 def Autómata (archivo):
@@ -10,7 +8,7 @@ def Autómata (archivo):
     i = 0 #Contador para el recorrido de la cadena (archivo)
     varTemp = "" #Variable temporal para armar los lexemas (números)
     estadoActual = 0 #Variable para movilizarnos de estado a estado.
-    palabrasReservadas = ["operaciones", "operacion", "configuraciones", "texto", "fondo", "fuente", "forma"] #Palabras reservadas del lenguaje.
+    reservadas = ["operaciones", "operacion", "configuraciones", "texto", "fondo", "fuente", "forma"] #Palabras reservadas del lenguaje.
     operadores = ["suma", "resta", "multiplicacion", "division", "potencia", "raiz", "inverso", "seno", "coseno", "tangente", "mod"] #También son palabras reservadas pero se manejan por separado para la vericiación en la operación.
     valor = ["valor1", "valor2"] #Todas las operaciones tendrán como máximo 2 valores, exceptuando mod y las trigonométricas.
 
@@ -92,9 +90,11 @@ def Autómata (archivo):
                 estadoActual = 0
 
         elif estadoActual == 2:
+            if archivo[i] == '/' or archivo[i] == '\\':
+                columna += 1
                 
             if archivo[i] == '"':
-                if varTemp in palabrasReservadas:
+                if varTemp in reservadas:
                     tabla_tokens.append([varTemp, "Reservada", fila, columna])
                 elif varTemp in operadores:
                     tabla_tokens.append([varTemp, "Operador", fila, columna])
@@ -144,48 +144,10 @@ def Autómata (archivo):
     res = [tabla_tokens, tabla_errores] #Retornamos las 2 listas.
     return res
 
-'''def errores():
-    global tabla_errores 
-    
-    errores_json = {"errores": []}
-
-    for i, error in enumerate(tabla_errores):
-        error_dict = {
-            "No": i + 1,
-            "descripcion": {
-                "lexema": error[0],
-                "tipo": "error lexico",
-                "columna": error[2],
-                "fila": error[1]
-            }
-        }
-        errores_json["errores"].append(error_dict)
-
-    with open("errores.json", "w", encoding="utf-8") as json_file:
-        json.dump(errores_json, json_file, indent=4)'''
-
-def main():
-    entrada ='''
-                {
-                    "operaciones": [+
-                                        {
-                                            "operacion":"suma",
-                                            "valor1": 4.5,
-                                            "valor2": '
-                                        }
-                                    ], 
-                    "configuraciones": [-
-                                            {
-                                                "texto": "Operaciones",
-                                                "fondo": "azul"
-                                            }
-                                        ]
-                }'''
-    salida = Autómata(entrada)
-    print("TOKENS")
+def mostrarTokens(salida):
+    print("-TOKENS RECONOCIDOS-")
+    print('-' * 53)
+    print("{:<11} {:<23} {:<8} {:<15}".format("Lexema ", "Tipo de Token", "Fila", "Columna"))
+    print('-' * 53)
     for token in salida[0]:
-        print(token)
-    #errores()
-
-if __name__ == "__main__":
-    main()
+        print("{:<11} {:<24} {:<8} {:<15}".format(token[0], token[1], token[2], token[3]))

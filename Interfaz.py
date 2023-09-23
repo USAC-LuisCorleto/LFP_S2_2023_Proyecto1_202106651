@@ -1,8 +1,11 @@
 import tkinter as tk
 from tkinter import font, filedialog, messagebox
 from Analizador import Autómata
+from Analizador import mostrarTokens
 from Operaciones import realOp
 import json
+import sys
+import io
 
 ventana = tk.Tk()
 cajatxt = tk.Text(ventana, height=30, width=120)
@@ -42,13 +45,14 @@ def guardarArchivoComo():
 def analizarArchivo():
     contenido = cajatxt.get("1.0", tk.END)
     resultado = Autómata(contenido)
-    realOp(contenido)
     
-    # Mostrar los tokens en el cuadro de texto
+    sys.stdout = io.StringIO()
+    mostrarTokens(resultado)
+    salida = sys.stdout.getvalue()
+    sys.stdout = sys.__stdout__
     cajatxt.delete(1.0, tk.END)
-    cajatxt.insert(tk.END, "TOKENS:\n")
-    for token in resultado[0]:
-        cajatxt.insert(tk.END, str(token) + "\n")
+    cajatxt.insert(tk.END, salida)
+    
 
 def mostrarErrores():
     contenido = cajatxt.get("1.0", tk.END)
@@ -71,6 +75,20 @@ def mostrarErrores():
     with open("Erorres_202106651.json", "w", encoding="utf-8") as json_file:
         json.dump(errores_json, json_file, indent=4, ensure_ascii=False)
 
+def mostrarReporte():
+    global archivo_actual
+    if archivo_actual:
+        with open(archivo_actual, 'r') as json_file:
+            json_data = json_file.read()
+        json_data = json_data.lower()
+        cajatxt.delete(1.0, tk.END)
+        sys.stdout = io.StringIO()
+        realOp(json_data)
+
+        salida = sys.stdout.getvalue()
+        sys.stdout = sys.__stdout__
+        cajatxt.insert(tk.END, salida)
+        
 def salir():
     ventana.destroy()
 
@@ -96,7 +114,7 @@ def Interfaz():
 
     botAnalizar = tk.Button(ventana, text="Analizar", bg="gray", font=fuenteN, height=3, width=20, command=analizarArchivo )
     botErrores = tk.Button(ventana, text="Errores", bg="gray", font=fuenteN, height=3, width=20, command=mostrarErrores)
-    botReporte = tk.Button(ventana, text="Reporte", bg="gray", font=fuenteN, height=3, width=20)
+    botReporte = tk.Button(ventana, text="Reporte", bg="gray", font=fuenteN, height=3, width=20, command=mostrarReporte)
 
     botAnalizar.pack(side=tk.LEFT, padx=20, pady=20)
     botErrores.pack(side=tk.LEFT, padx=20, pady=20)
