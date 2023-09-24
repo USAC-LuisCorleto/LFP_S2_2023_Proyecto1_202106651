@@ -3,37 +3,10 @@
         {
             "No": 1,
             "descripcion": {
-                "lexema": "x",
-                "tipo": "error lexico",
-                "columna": 28,
-                "fila": 5
-            }
-        },
-        {
-            "No": 2,
-            "descripcion": {
-                "lexema": "-",
-                "tipo": "error lexico",
-                "columna": 34,
-                "fila": 9
-            }
-        },
-        {
-            "No": 3,
-            "descripcion": {
-                "lexema": "?",
-                "tipo": "error lexico",
-                "columna": 32,
-                "fila": 10
-            }
-        },
-        {
-            "No": 4,
-            "descripcion": {
                 "lexema": "+",
                 "tipo": "error lexico",
                 "columna": 10,
-                "fila": 13
+                "fila": 3
             }
         }
     ]
