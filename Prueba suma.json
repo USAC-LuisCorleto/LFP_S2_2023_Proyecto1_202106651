@@ -3,7 +3,13 @@
         {
             "operacion": "suma",
             "valor1": 4.5,
-            "valor2": 5.32
+            "valor2": [
+                {
+                    "operacion":"suma",
+                    "valor1":4.5,
+                    "valor2":3
+                }
+                ]
         }
         ],
         "configuraciones": [

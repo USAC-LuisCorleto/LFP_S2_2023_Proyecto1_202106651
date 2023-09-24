@@ -10,9 +10,15 @@
             "valor1": 4.5,
             "valor2": [
                 {
-                    "operacion":"potencia",
-                    "valor1":10,
-                    "valor2":3
+                    "operacion":"raiz",
+                    "valor1":16,
+                    "valor2":[
+                        {
+                            "operacion":"raiz",
+                            "valor1":4,
+                            "valor2":2
+                        }
+                        ]
                 }
                 ]
         },

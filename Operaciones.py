@@ -3,13 +3,20 @@ import graphviz
 import math
 
 tokens = []  
-dot_file_name = "grafo.dot"              
+dot_file_name = "grafo.dot"   
+node_counter = 1
+
+def generate_node_id():
+    global node_counter
+    node_id = f"node_{node_counter}"
+    node_counter += 1
+    return node_id           
 
 def realOp (cadena):
     global tokens
     global dot_file_name
     respuesta = Autómata(cadena)
-    tokens = respuesta[0]            
+    tokens = respuesta[0] #El retorno se hizo en una lista y la lista de tokens se guardó en la primera posición, en este caso la posición 0.   
     tokens.reverse()
     iniciar()
     with open(dot_file_name, "a") as dot_file:
@@ -60,7 +67,8 @@ def operacion():
 def expresion():
     operador = ""                               
     valores = []                              
-    resultado = 0                              
+    resultado = 0           
+    node_id = generate_node_id()                   
 
     try:
         temp = tokens.pop()                     
@@ -75,42 +83,42 @@ def expresion():
         if len(valores) == 0:
             print("No hay valores en la operación.")
             return 0
-        
+
         #OPERACIONES
         if operador == "suma":
             for numero in valores:
                 resultado += numero
-            print(valores[0], "+", valores[1], "=", resultado, operador)
+            print(f"Operador: {operador} - ({valores[0]} + {valores[1]}) = {resultado}")
             with open(dot_file_name, "a") as dot_file:
-                dot_file.write(f'\n    {resultado} [label="{resultado} - Suma", fillcolor="blue", style="filled", shape="circle"]')
-                dot_file.write(f'\n    {valores[0]} [label="{valores[0]}", fillcolor="blue", style="filled", shape="circle"]')
-                dot_file.write(f'\n    {valores[1]} [label="{valores[1]}", fillcolor="blue", style="filled", shape="circle"]')
-                dot_file.write(f'\n    {resultado} -> {valores[0]}')
-                dot_file.write(f'\n    {resultado} -> {valores[1]}')
+                dot_file.write(f'\n    {node_id} [label="{resultado} - Suma", fillcolor="blue", style="filled", shape="circle"]')
+                for valor in valores:
+                    valor_node_id = generate_node_id()  
+                    dot_file.write(f'\n    {valor_node_id} [label="{valor}", fillcolor="blue", style="filled", shape="circle"]')
+                    dot_file.write(f'\n    {node_id} -> {valor_node_id}')
 
         elif operador == "resta":
             resultado = valores[0]
             for numero in valores[1:]:
                 resultado -= numero
-            print(valores[0], "-", valores[1], "=", resultado, operador)
+            print(f"Operador: {operador} - ({valores[0]} - {valores[1]}) = {resultado}")
             with open(dot_file_name, "a") as dot_file:
-                dot_file.write(f'\n    {resultado} [label="{resultado} - Resta", fillcolor="blue", style="filled", shape="circle"]')
-                dot_file.write(f'\n    {valores[0]} [label="{valores[0]}", fillcolor="blue", style="filled", shape="circle"]')
-                dot_file.write(f'\n    {valores[1]} [label="{valores[1]}", fillcolor="blue", style="filled", shape="circle"]')
-                dot_file.write(f'\n    {resultado} -> {valores[0]}')
-                dot_file.write(f'\n    {resultado} -> {valores[1]}')
+                dot_file.write(f'\n    {node_id} [label="{resultado} - Resta", fillcolor="blue", style="filled", shape="circle"]')
+                for valor in valores:
+                    valor_node_id = generate_node_id() 
+                    dot_file.write(f'\n    {valor_node_id} [label="{valor}", fillcolor="blue", style="filled", shape="circle"]')
+                    dot_file.write(f'\n    {node_id} -> {valor_node_id}')
         
         elif operador == "multiplicacion":
             resultado = valores[0]
             for numero in valores[1:]:
                 resultado *= numero
-            print(valores[0], "*", valores[1], "=", resultado, operador)
+            print(f"Operador: {operador} - ({valores[0]} * {valores[1]}) = {resultado}")
             with open(dot_file_name, "a") as dot_file:
-                dot_file.write(f'\n    {resultado} [label="{resultado} - Multiplicacion", fillcolor="blue", style="filled", shape="circle"]')
-                dot_file.write(f'\n    {valores[0]} [label="{valores[0]}", fillcolor="blue", style="filled", shape="circle"]')
-                dot_file.write(f'\n    {valores[1]} [label="{valores[1]}", fillcolor="blue", style="filled", shape="circle"]')
-                dot_file.write(f'\n    {resultado} -> {valores[0]}')
-                dot_file.write(f'\n    {resultado} -> {valores[1]}')
+                dot_file.write(f'\n    {node_id} [label="{resultado} - Multiplicacion", fillcolor="blue", style="filled", shape="circle"]')
+                for valor in valores:
+                    valor_node_id = generate_node_id()  
+                    dot_file.write(f'\n    {valor_node_id} [label="{valor}", fillcolor="blue", style="filled", shape="circle"]')
+                    dot_file.write(f'\n    {node_id} -> {valor_node_id}')
         
         elif operador == "division":
             try:
@@ -118,13 +126,13 @@ def expresion():
                     print("Error: La division solo admite dos valores.")
                 else:
                     resultado = valores[0] / valores[1]
-                    print(valores[0], "/", valores[1], "=", resultado, operador)
+                    print(f"Operador: {operador} - ({valores[0]} / {valores[1]}) = {resultado}")
                     with open(dot_file_name, "a") as dot_file:
-                        dot_file.write(f'\n    {resultado} [label="{resultado} - Division", fillcolor="blue", style="filled", shape="circle"]')
-                        dot_file.write(f'\n    {valores[0]} [label="{valores[0]}", fillcolor="blue", style="filled", shape="circle"]')
-                        dot_file.write(f'\n    {valores[1]} [label="{valores[1]}", fillcolor="blue", style="filled", shape="circle"]')
-                        dot_file.write(f'\n    {resultado} -> {valores[0]}')
-                        dot_file.write(f'\n    {resultado} -> {valores[1]}')
+                        dot_file.write(f'\n    {node_id} [label="{resultado} - Division", fillcolor="blue", style="filled", shape="circle"]')
+                        for valor in valores:
+                            valor_node_id = generate_node_id() 
+                            dot_file.write(f'\n    {valor_node_id} [label="{valor}", fillcolor="blue", style="filled", shape="circle"]')
+                            dot_file.write(f'\n    {node_id} -> {valor_node_id}')
             except:
                 resultado = 0
 
@@ -132,33 +140,38 @@ def expresion():
             resultado = valores[0]
             for numero in valores[1:]:
                 resultado **= numero
-            print(valores[0], "^", valores[1], "=", resultado, operador)
+            print(f"Operador: {operador} - ({valores[0]} ^ {valores[1]}) = {resultado}")
             with open(dot_file_name, "a") as dot_file:
-                dot_file.write(f'\n    {resultado} [label="{resultado} - Potencia", fillcolor="blue", style="filled", shape="circle"]')
-                dot_file.write(f'\n    {valores[0]} [label="{valores[0]}", fillcolor="blue", style="filled", shape="circle"]')
-                dot_file.write(f'\n    {valores[1]} [label="{valores[1]}", fillcolor="blue", style="filled", shape="circle"]')
-                dot_file.write(f'\n    {resultado} -> {valores[0]}')
-                dot_file.write(f'\n    {resultado} -> {valores[1]}')
+                dot_file.write(f'\n    {node_id} [label="{resultado} - Potencia", fillcolor="blue", style="filled", shape="circle"]')
+                for valor in valores:
+                    valor_node_id = generate_node_id() 
+                    dot_file.write(f'\n    {valor_node_id} [label="{valor}", fillcolor="blue", style="filled", shape="circle"]')
+                    dot_file.write(f'\n    {node_id} -> {valor_node_id}')
         
         elif operador == "raiz":
             resultado = valores[0]
             for numero in valores[1:]:
                 resultado **= 1/numero
-            print("√", valores[0], "=", resultado, operador)
+            print(f"Operador: {operador} - √{valores[0]} = {resultado}")
             with open(dot_file_name, "a") as dot_file:
-                dot_file.write(f'\n    {resultado} [label="{resultado} - Raiz", fillcolor="blue", style="filled", shape="circle"]')
-                dot_file.write(f'\n    {valores[0]} [label="{valores[0]}", fillcolor="blue", style="filled", shape="circle"]')
-                dot_file.write(f'\n    {resultado} -> {valores[0]}')
+                dot_file.write(f'\n    {node_id} [label="{resultado} - Raiz", fillcolor="blue", style="filled", shape="circle"]')
+                for valor in valores:
+                    valor_node_id = generate_node_id() 
+                    dot_file.write(f'\n    {valor_node_id} [label="{valor}", fillcolor="blue", style="filled", shape="circle"]')
+                    dot_file.write(f'\n    {node_id} -> {valor_node_id}')
 
         elif operador == "inverso":
             try:
                 valor_original = valores[0]
                 resultado = 1 / valor_original
+                print(f"Operador: {operador} - 1/{valores[0]} = {resultado}")
                 print("1/", valores[0], "=", resultado, operador)
                 with open(dot_file_name, "a") as dot_file:
-                    dot_file.write(f'\n    {resultado} [label="{resultado} - Inverso", fillcolor="blue", style="filled", shape="circle"]')
-                    dot_file.write(f'\n    {valores[0]} [label="{valores[0]}", fillcolor="blue", style="filled", shape="circle"]')
-                    dot_file.write(f'\n    {resultado} -> {valores[0]}')
+                    dot_file.write(f'\n    {node_id} [label="{resultado} - Inverso", fillcolor="blue", style="filled", shape="circle"]')
+                    for valor in valores:
+                        valor_node_id = generate_node_id() 
+                        dot_file.write(f'\n    {valor_node_id} [label="{valor}", fillcolor="blue", style="filled", shape="circle"]')
+                        dot_file.write(f'\n    {node_id} -> {valor_node_id}')
             except:
                 print("No se pudo operar, el inverso es 0 o contiene más de un valor.")
 
@@ -166,13 +179,13 @@ def expresion():
             resultado = valores[0]
             for numero in valores[1:]:
                 resultado %= numero
-            print(valores[0], "%", valores[1], "=", resultado, operador)
+            print(f"Operador: {operador} - ({valores[0]} % {valores[1]}) = {resultado}")
             with open(dot_file_name, "a") as dot_file:
-                dot_file.write(f'\n    {resultado} [label="{resultado} - Mod", fillcolor="blue", style="filled", shape="circle"]')
-                dot_file.write(f'\n    {valores[0]} [label="{valores[0]}", fillcolor="blue", style="filled", shape="circle"]')
-                dot_file.write(f'\n    {valores[1]} [label="{valores[1]}", fillcolor="blue", style="filled", shape="circle"]')
-                dot_file.write(f'\n    {resultado} -> {valores[0]}')
-                dot_file.write(f'\n    {resultado} -> {valores[1]}')
+                dot_file.write(f'\n    {node_id} [label="{resultado} - Modulo", fillcolor="blue", style="filled", shape="circle"]')
+                for valor in valores:
+                    valor_node_id = generate_node_id() 
+                    dot_file.write(f'\n    {valor_node_id} [label="{valor}", fillcolor="blue", style="filled", shape="circle"]')
+                    dot_file.write(f'\n    {node_id} -> {valor_node_id}')
             
         elif operador == "seno":
             try:
@@ -180,11 +193,14 @@ def expresion():
                     print("Error: La operación 'seno' debe tener un solo valor.")
                 else:
                     resultado = math.sin(math.radians(valores[0]))
-                    print("sen(", valores[0], ") =", resultado, operador)
+                    print(f"Operador: {operador} - sen({valores[0]})")
+                    #print("sen(", valores[0], ") =", resultado, operador)
                     with open(dot_file_name, "a") as dot_file:
-                        dot_file.write(f'\n    {resultado} [label="{resultado} - Seno", fillcolor="blue", style="filled", shape="circle"]')
-                        dot_file.write(f'\n    {valores[0]} [label="{valores[0]}", fillcolor="blue", style="filled", shape="circle"]')
-                        dot_file.write(f'\n    {resultado} -> {valores[0]}')
+                        dot_file.write(f'\n    {node_id} [label="{resultado} - Seno", fillcolor="blue", style="filled", shape="circle"]')
+                        for valor in valores:
+                            valor_node_id = generate_node_id()  
+                            dot_file.write(f'\n    {valor_node_id} [label="{valor}", fillcolor="blue", style="filled", shape="circle"]')
+                            dot_file.write(f'\n    {node_id} -> {valor_node_id}')
             except:
                 print("No se pudo calcular el seno.")
                 resultado = 0
@@ -195,12 +211,13 @@ def expresion():
                     print("Error: La operación 'coseno' debe tener un solo valor.")
                 else:
                     resultado = math.cos(math.radians(valores[0]))
-                    print("cos(", valores[0], ") =", resultado, operador)
+                    print(f"Operador: {operador} - cos({valores[0]})")
                     with open(dot_file_name, "a") as dot_file:
-                        dot_file.write(f'\n    {resultado} [label="{resultado} - Coseno", fillcolor="blue", style="filled", shape="circle"]')
-                        dot_file.write(f'\n    {valores[0]} [label="{valores[0]}", fillcolor="blue", style="filled", shape="circle"]')
-                        dot_file.write(f'\n    {resultado} -> {valores[0]}')
-                print("grafo creado")
+                        dot_file.write(f'\n    {node_id} [label="{resultado} - Coseno", fillcolor="blue", style="filled", shape="circle"]')
+                        for valor in valores:
+                            valor_node_id = generate_node_id()
+                            dot_file.write(f'\n    {valor_node_id} [label="{valor}", fillcolor="blue", style="filled", shape="circle"]')
+                            dot_file.write(f'\n    {node_id} -> {valor_node_id}')
             except:
                 print("No se pudo calcular el coseno.")
                 resultado = 0
@@ -211,11 +228,13 @@ def expresion():
                     print("Error: La operación 'tangente' debe tener un solo valor.")
                 else:
                     resultado = math.tan(math.radians(valores[0])) 
-                    print("tan(", valores[0], ") =", resultado, operador)
+                    print(f"Operador: {operador} - tan({valores[0]})")
                     with open(dot_file_name, "a") as dot_file:
-                        dot_file.write(f'\n    {resultado} [label="{resultado} - Tangente", fillcolor="blue", style="filled", shape="circle"]')
-                        dot_file.write(f'\n    {valores[0]} [label="{valores[0]}", fillcolor="blue", style="filled", shape="circle"]')
-                        dot_file.write(f'\n    {resultado} -> {valores[0]}')
+                        dot_file.write(f'\n    {node_id} [label="{resultado} - Tangente", fillcolor="blue", style="filled", shape="circle"]')
+                        for valor in valores:
+                            valor_node_id = generate_node_id()
+                            dot_file.write(f'\n    {valor_node_id} [label="{valor}", fillcolor="blue", style="filled", shape="circle"]')
+                            dot_file.write(f'\n    {node_id} -> {valor_node_id}')
             except:
                 print("No se pudo calcular la tangente.")
                 resultado = 0
@@ -305,7 +324,7 @@ def configGraph():
 def ajustesGraph():
     try:
         temp = tokens.pop()                     
-        if temp[1] != "Reservada":            
+        if temp[1] != "String":            
             return 
         temp = tokens.pop()   
 

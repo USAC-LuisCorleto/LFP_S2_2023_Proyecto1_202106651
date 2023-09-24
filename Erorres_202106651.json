@@ -3,55 +3,37 @@
         {
             "No": 1,
             "descripcion": {
-                "lexema": "?",
+                "lexema": "x",
                 "tipo": "error lexico",
-                "columna": 21,
-                "fila": 2
+                "columna": 28,
+                "fila": 5
             }
         },
         {
             "No": 2,
             "descripcion": {
-                "lexema": "+",
+                "lexema": "-",
                 "tipo": "error lexico",
-                "columna": 10,
-                "fila": 3
+                "columna": 34,
+                "fila": 9
             }
         },
         {
             "No": 3,
             "descripcion": {
-                "lexema": "x",
+                "lexema": "?",
                 "tipo": "error lexico",
-                "columna": 10,
-                "fila": 7
+                "columna": 32,
+                "fila": 10
             }
         },
         {
             "No": 4,
             "descripcion": {
-                "lexema": "x",
+                "lexema": "+",
                 "tipo": "error lexico",
-                "columna": 40,
-                "fila": 11
-            }
-        },
-        {
-            "No": 5,
-            "descripcion": {
-                "lexema": "-",
-                "tipo": "error lexico",
-                "columna": 6,
-                "fila": 14
-            }
-        },
-        {
-            "No": 6,
-            "descripcion": {
-                "lexema": "-",
-                "tipo": "error lexico",
-                "columna": 7,
-                "fila": 14
+                "columna": 10,
+                "fila": 13
             }
         }
     ]
