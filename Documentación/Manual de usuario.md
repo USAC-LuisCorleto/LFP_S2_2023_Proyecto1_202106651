@@ -23,4 +23,10 @@ se abrió el archivo y se presionó el botón analizar
 ![Imágen 5](../Images/Img%206.png)
 una vez se haya presionado, se mostrará un mensaje de diálogo indicando que se analizó correctamente el archivo, además en la caja de texto de la interfaz, se muestran, el lexema, tipo de token, fila y columna de los tokens reconocidos en el archivo.
 **-Errores:** De nuevo, previamente seleccionado un archivo, el usuario puede generar un archivo JSON mediante el botón, que mostrará los errores léxicos del archivo con el siguiente formato: 
-: : : ![Imágen 6](../Images/Img%208.png) : : :
+![Imágen 6](../Images/Img%208.png)
+Este contendrá el número del error, su drescripción con, el lexema, tipo de error, fila y columna.
+**-Borrar:** El usuario tiene la opción de borrar el contenido de la caja de texto sin necesidad de utilizar las opciones clasicas para borrar texto de su teclado como el SUPR o el return.
+**-Reporte:** Aquí el usuario genera el reporte del grafo con las operaciones identificadas y resueltas, además se muestra en la caja de texto, todas las operaciones que se realizaron, tanto anidadas como las operaciones padres.
+Se mostrará un mensaje de diálogo como el siguiente:
+![Imágen 7](../Images/Img%207.png)
+Y como se mencionó, se muestran las operaciones resueltas, con el operador utilizado designado por las instrucciones del archivo y como se realizó la misma.
